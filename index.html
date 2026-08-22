@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gopal — Science Teacher &amp; Musician</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12201b;
+    --bg-soft: #17271f;
+    --surface: #1d2f26;
+    --surface-2: #24392e;
+    --line: rgba(242,239,233,0.10);
+    --text: #f2efe9;
+    --text-muted: #a9b5ad;
+    --amber: #e8a33d;
+    --amber-soft: rgba(232,163,61,0.14);
+    --sage: #7db596;
+    --sage-soft: rgba(125,181,150,0.14);
+
+    --display: 'Fraunces', serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:1140px; margin:0 auto; padding:0 32px; }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--amber);
+    display:inline-block;
+  }
+
+  h1,h2,h3{ font-family:var(--display); font-weight:600; letter-spacing:-0.01em; }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:transparent;
+    transition:background .35s ease, border-color .35s ease, backdrop-filter .35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(18,32,27,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+    max-width:1140px; margin:0 auto;
+  }
+  .logo{
+    font-family:var(--display);
+    font-size:22px;
+    font-weight:700;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo span{ color:var(--amber); }
+  .navlinks{ display:flex; gap:38px; }
+  .navlinks a{
+    font-size:14px; font-weight:500;
+    color:var(--text-muted);
+    position:relative;
+    padding:4px 0;
+    transition:color .2s ease;
+  }
+  .navlinks a:hover{ color:var(--text); }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:-2px;
+    width:0; height:1px; background:var(--amber);
+    transition:width .25s ease;
+  }
+  .navlinks a:hover::after{ width:100%; }
+
+  .nav-cta{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    border:1px solid var(--amber);
+    color:var(--amber);
+    padding:9px 18px;
+    border-radius:2px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-cta:hover{ background:var(--amber); color:var(--bg); }
+
+  .burger{ display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:110; }
+  .burger span{ width:24px; height:2px; background:var(--text); transition:.3s; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:90px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:48px;
+    align-items:center;
+    width:100%;
+  }
+  .hero h1{
+    font-size:clamp(48px, 6.4vw, 84px);
+    line-height:0.98;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--amber);
+    font-weight:500;
+  }
+  .hero p.lede{
+    max-width:460px;
+    color:var(--text-muted);
+    font-size:17px;
+    margin-bottom:34px;
+  }
+  .btn-row{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:0.05em;
+    padding:14px 26px;
+    border-radius:2px;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn-solid{ background:var(--amber); color:var(--bg); font-weight:600; }
+  .btn-solid:hover{ transform:translateY(-2px); }
+  .btn-outline{ border:1px solid var(--line); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--amber); color:var(--amber); }
+
+  .hero-visual{
+    position:relative;
+    aspect-ratio:4/5;
+    border-radius:6px;
+    background:linear-gradient(160deg, var(--surface-2), var(--surface) 70%);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-visual .initial{
+    font-family:var(--display);
+    font-size:180px;
+    font-weight:700;
+    color:var(--sage);
+    opacity:0.9;
+  }
+  .hero-visual .staff-svg{
+    position:absolute; inset:0; width:100%; height:100%;
+  }
+  .hero-tag{
+    position:absolute; bottom:20px; left:20px; right:20px;
+    background:rgba(18,32,27,0.72);
+    backdrop-filter:blur(6px);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:12px 16px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-muted);
+    display:flex; justify-content:space-between;
+  }
+  .hero-tag b{ color:var(--amber); font-weight:600; }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:32px;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.14em;
+    color:var(--text-muted); text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue .line{ width:1px; height:36px; background:var(--line); position:relative; overflow:hidden; }
+  .scroll-cue .line::after{
+    content:""; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--amber);
+    animation:scrolldown 2s ease-in-out infinite;
+  }
+  @keyframes scrolldown{ to{ top:100%; } }
+
+  /* ---------- Section shared ---------- */
+  section{ padding:120px 0; position:relative; }
+  .section-head{ margin-bottom:56px; max-width:640px; }
+  .section-head h2{ font-size:clamp(30px,3.6vw,44px); margin-top:14px; }
+  .section-head p{ color:var(--text-muted); margin-top:14px; font-size:15.5px; }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    gap:64px;
+    align-items:start;
+  }
+  .about-photo{
+    aspect-ratio:3/4;
+    border-radius:6px;
+    background:linear-gradient(155deg, var(--sage-soft), var(--surface) 65%);
+    border:1px solid var(--line);
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .about-photo .initial{ font-family:var(--display); font-size:120px; color:var(--amber); opacity:.85; }
+  .about-photo .ring{
+    position:absolute; width:80%; height:80%; border:1px dashed var(--line); border-radius:50%;
+  }
+
+  .about-copy p{ color:var(--text-muted); font-size:16px; margin-bottom:18px; max-width:560px; }
+  .about-copy strong{ color:var(--text); font-weight:600; }
+
+  .split-row{ display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:36px; }
+  .split-card{
+    border:1px solid var(--line); border-radius:6px; padding:24px;
+    background:var(--surface);
+  }
+  .split-card h4{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--amber); margin-bottom:14px;
+  }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-size:13px; padding:6px 12px; border-radius:20px;
+    border:1px solid var(--line); color:var(--text-muted);
+  }
+
+  /* ---------- What I Do ---------- */
+  .cards-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .card{
+    background:var(--bg-soft);
+    padding:40px 32px;
+    transition:background .25s ease;
+  }
+  .card:hover{ background:var(--surface); }
+  .card .num{
+    font-family:var(--mono); font-size:12px; color:var(--text-muted);
+  }
+  .card h3{
+    font-size:20px; margin:18px 0 10px; font-weight:600;
+  }
+  .card p{ color:var(--text-muted); font-size:14.5px; }
+  .card .icon{
+    width:38px; height:38px; margin-bottom:6px;
+    color:var(--amber);
+  }
+
+  /* ---------- Philosophy quote ---------- */
+  .quote-block{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:80px 0;
+    text-align:center;
+  }
+  .quote-block blockquote{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(22px,3vw,32px);
+    max-width:760px;
+    margin:0 auto 20px;
+    line-height:1.4;
+  }
+  .quote-block cite{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--amber); font-style:normal;
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-inner{
+    display:grid; grid-template-columns:1.3fr 0.7fr; gap:40px; align-items:center;
+    background:linear-gradient(135deg, var(--surface-2), var(--surface));
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:64px;
+  }
+  .contact-inner h2{ font-size:clamp(30px,3.8vw,46px); line-height:1.08; }
+  .contact-inner p{ color:var(--text-muted); margin-top:16px; max-width:420px; }
+  .contact-links{ display:flex; flex-direction:column; gap:16px; }
+  .contact-links a{
+    font-family:var(--mono); font-size:14px;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 0; border-bottom:1px solid var(--line);
+    color:var(--text);
+    transition:color .2s ease, padding-left .2s ease;
+  }
+  .contact-links a:hover{ color:var(--amber); padding-left:6px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:40px 0;
+    border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13px; color:var(--text-muted);
+  }
+  .social-row{ display:flex; gap:20px; }
+  .social-row a{ color:var(--text-muted); transition:color .2s ease; }
+  .social-row a:hover{ color:var(--amber); }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .scroll-cue .line::after{ animation:none; }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ max-width:340px; margin:40px auto 0; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-photo{ max-width:320px; }
+    .cards-grid{ grid-template-columns:1fr 1fr; }
+    .contact-inner{ grid-template-columns:1fr; padding:44px 28px; text-align:left; }
+  }
+  @media (max-width: 640px){
+    .navlinks, .nav-cta{ display:none; }
+    .burger{ display:flex; }
+    .navlinks.open{
+      display:flex; flex-direction:column; position:fixed; inset:0; top:0;
+      background:var(--bg); padding:120px 40px; gap:28px; font-size:20px;
+    }
+    .navlinks.open a{ color:var(--text); }
+    .split-row{ grid-template-columns:1fr; }
+    .cards-grid{ grid-template-columns:1fr; }
+    section{ padding:80px 0; }
+    .wrap{ padding:0 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <nav>
+    <div class="logo">Gopal<span>.</span></div>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">What I Do</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Science Teacher · Guitarist · Vocalist</span>
+      <h1>Hello, I'm<br><em>Gopal</em></h1>
+      <p class="lede">I teach science by day and chase melodies by night — on guitar, at the keyboard, or simply singing. I believe curiosity and creativity come from the same place, whether it's a classroom experiment or a chord progression.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn btn-solid">Let's Connect →</a>
+        <a href="#about" class="btn btn-outline">More About Me</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <svg class="staff-svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#e8a33d" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#7db596" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <g stroke="url(#lineGrad)" stroke-width="1" fill="none" opacity="0.6">
+          <path d="M -20 120 Q 100 90 200 130 T 420 110"/>
+          <path d="M -20 160 Q 100 130 200 170 T 420 150"/>
+          <path d="M -20 200 Q 100 170 200 210 T 420 190"/>
+          <path d="M -20 240 Q 100 210 200 250 T 420 230"/>
+          <path d="M -20 280 Q 100 250 200 290 T 420 270"/>
+        </g>
+        <circle cx="130" cy="128" r="4" fill="#e8a33d"/>
+        <circle cx="260" cy="205" r="4" fill="#7db596"/>
+        <circle cx="330" cy="150" r="3" fill="#e8a33d"/>
+      </svg>
+      <div class="initial">G</div>
+      <div class="hero-tag">
+        <span>Currently teaching <b>Science</b></span>
+        <span>Playing <b>Guitar &amp; Keys</b></span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span> Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <div class="ring"></div>
+        <div class="initial">G</div>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">About Me</span>
+        <h2 style="margin:16px 0 24px;">Who I Am</h2>
+        <p>I'm <strong>Gopal</strong>, a science teacher who believes the best lessons feel a little like music — there's rhythm in a well-paced explanation, and harmony in a class that finally "gets it." I've spent my career making science approachable, hands-on, and genuinely enjoyable for students.</p>
+        <p>Outside the classroom, music takes over. I play <strong>guitar</strong> and <strong>keyboard</strong>, and singing is where I unwind and express what a lesson plan can't. Whether I'm explaining a chemical reaction or working out a new chord progression, I'm chasing the same thing: that moment of understanding, or feeling, clicking into place.</p>
+
+        <div class="split-row">
+          <div class="split-card reveal">
+            <h4>In the Classroom</h4>
+            <div class="tag-row">
+              <span class="tag">Science Education</span>
+              <span class="tag">Lesson Planning</span>
+              <span class="tag">Lab Demonstrations</span>
+              <span class="tag">Student Mentoring</span>
+            </div>
+          </div>
+          <div class="split-card reveal">
+            <h4>On the Stage</h4>
+            <div class="tag-row">
+              <span class="tag">Guitar</span>
+              <span class="tag">Keyboard</span>
+              <span class="tag">Vocals / Singing</span>
+              <span class="tag">Music Composition</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DO -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What I Do</span>
+      <h2>Two Passions, One Purpose</h2>
+      <p>Teaching and music might look like different worlds, but for me they run on the same core skills — clarity, patience, and a love of practice.</p>
+    </div>
+
+    <div class="cards-grid reveal">
+      <div class="card">
+        <span class="num">01</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3h6l1 5-4 3 4 3-1 5H9l-1-5 4-3-4-3 1-5z"/></svg>
+        <h3>Interactive Lessons</h3>
+        <p>Turning science topics into hands-on, easy-to-follow lessons that keep students curious and engaged.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        <h3>Lab Demonstrations</h3>
+        <p>Simple, safe experiments that make abstract concepts visible and memorable.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5"/></svg>
+        <h3>Curriculum Design</h3>
+        <p>Structuring topics so they build logically, with room for questions and exploration.</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+        <h3>Guitar &amp; Keyboard</h3>
+        <p>Playing and practicing across guitar and keyboard, from simple melodies to full compositions.</p>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 19v3M8 22h8"/><path d="M12 15a4 4 0 0 0 4-4V6a4 4 0 0 0-8 0v5a4 4 0 0 0 4 4z"/></svg>
+        <h3>Singing / Vocals</h3>
+        <p>Singing as a way to unwind, express, and connect — solo or alongside guitar and keys.</p>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12l2-2 4 4 8-8 2 2-10 10-6-6z"/></svg>
+        <h3>Patient Mentoring</h3>
+        <p>Whether it's a tricky science concept or a new chord shape, I believe patient practice gets you there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-block reveal">
+  <div class="wrap">
+    <blockquote>"A good lesson and a good song both need the same thing — patience, practice, and a little bit of curiosity."</blockquote>
+    <cite>— Gopal</cite>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner reveal">
+      <div>
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Let's talk teaching,<br>or let's talk music.</h2>
+        <p>Open to teaching opportunities, collaborations, or just a conversation about science and music. Reach out anytime.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:gopal@example.com">Email <span>↗</span></a>
+        <a href="tel:+910000000000">Phone <span>↗</span></a>
+        <a href="#">LinkedIn <span>↗</span></a>
+        <a href="#">Instagram <span>↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+    <span>© 2026 Gopal. All rights reserved.</span>
+    <div class="social-row">
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // mobile nav
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
